@@ -6,7 +6,7 @@
 import { Schema, model } from "mongoose";
 
 const explorerSchema = new Schema({
-  nome: {
+  name: {
     type: String,
     required: true,
   },
