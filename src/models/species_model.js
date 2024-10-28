@@ -12,7 +12,7 @@ const speciesSchema = new Schema({
     required: true
     
   },
-  nome: {
+  name: {
     type: String,
     required: true
   },
