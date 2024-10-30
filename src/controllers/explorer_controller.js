@@ -1,48 +1,47 @@
+import explorer from "../models/explorer_model.js";
 
-
-import Explorer from "../models/explorer_model.js"
-
-export const store = async (req, res) => {
-    try {
-        const content = await Explorer.create(req.body);
-        res.status(201).json(content)
-    } catch (error) {
-        res.status(400).send(error.message)
-    }
-}
-
-export const index = async (req, res) => {
-    try {
-        const content = await Explorer.find().exec();
-        res.json(content)
-    } catch (error) {
-        res.status(400).send(error.message)
-    }
-}
-
-export const show = async (req, res) => {
-    try {
-        const content = await Explorer.findById(req.params.id).exec();
-        res.json(content)
-    } catch (error) {
-        res.status(400).send(error.message)
-    }
-}
-
+export const store = async (req, resp) => {
+  try {
+    const content = await explorer.create(req.body);
+    resp.json();
+  } catch (error) {
+    resp.json(error);
+  }
+};
+export const index = async (req, resp) => {
+  try {
+    const content = await explorer.find().exec();
+    resp.json(content);
+  } catch (error) {
+    resp.json(error);
+  }
+};
+export const show = async (req, resp) => {
+  try {
+    const content = await explorer
+      .findById(req.params.id)
+      .populate("expeditionParticipated")
+      .exec();
+    resp.json(content);
+  } catch (error) {
+    resp.json(error);
+  }
+};
 export const update = async (req, res) => {
-    try {
-        const content = await Explorer.findByIdAndUpdate(req.params.id, req.body).exec();
-        res.json(content)
-    } catch (error) {
-        res.status(400).send(error.message)
-    }
-}
-
-export const destroy = async (req, res) => {
-    try {
-        const content = await Explorer.findByIdAndDelete(req.params.id).exec();
-        res.json(content)
-    } catch (error) {
-        res.status(400).send(error.message)
-    }
-}
+  try {
+    const content = await explorer
+      .findByIdAndUpdate(req.params.id, req.body)
+      .exec();
+    res.json(content);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+export const destroy = async (req, resp) => {
+  try {
+    explorer.findByIdAndDelete(req.params.id).exec();
+    resp.json();
+  } catch (error) {
+    resp.json(error);
+  }
+};
